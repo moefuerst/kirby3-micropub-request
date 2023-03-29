@@ -19,9 +19,9 @@ Load the classes in `src/` using your favourite method, for example using [Kirby
 
 ```php
 load([
-    'mof\\Micropub\\Request' => 'src/Request.php',
-    'mof\\Micropub\\IndieAuth' => 'src/IndieAuth.php',
-    'mof\\Micropub\\Error' => 'src/Error.php'
+  'mof\\Micropub\\Request' => 'src/Request.php',
+	'mof\\Micropub\\IndieAuth' => 'src/IndieAuth.php',
+	'mof\\Micropub\\Error' => 'src/Error.php'
 ], __DIR__);
 ```
 
@@ -91,7 +91,7 @@ You can still access *all* properties submitted with the request using `$request
 $request->properties()->get();
 
 /*
-	Array
+  Array
 	(
 		[name] => Array
 			(
