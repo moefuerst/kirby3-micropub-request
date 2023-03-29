@@ -2,7 +2,7 @@
 
  The Micropub `Request` class for Kirby 3 provides a simple API to inspect incoming [Micropub](https://www.w3.org/TR/micropub/) requests. It converts the submitted data, parses the properties of the request, and gets URL-referenced attachments. It maps the behavior of the `Kirby\Http\Request` object in many ways (Body, Files, Method, Auth), *except* for `url`, which contains the url of the page to be updated or deleted if applicable.
 
-## Who is this for? 
+## Who is this for?
 This is *not* a fully working Kirby 3 plugin. The goal of this code is to have a reliable foundation for developers working with Micropub and Kirby 3. You can easily add it as a dependency when developing your own Micropub server/endpoint plugin for Kirby.
 
 
@@ -41,7 +41,7 @@ if($request->is('POST')) {
 
   // Makes it easy to implement 'create', 'update' or 'delete' actions for your endpoint
   switch($request->action()) {
-    
+
     case 'create':
 
       // All the properties of the post, already standardized into a predictable data array
@@ -63,7 +63,7 @@ if($request->is('POST')) {
 
 ### Content
 Micropub clients can [send requests in various flavours](https://www.w3.org/TR/micropub/#h-overview). `$request->body()` provides an interface to the fully parsed ‘content-relevant’ fields, excluding command properties submitted by the client (for example `mp-slug` or references to attachments)— these are available through separate methods.
- 
+
 
 ```php
 $request->body();
@@ -83,13 +83,13 @@ $request->body();
 */
 ```
 
-To get an array of the content fields use `$request->body()->toArray()`. 
+To get an array of the content fields use `$request->body()->toArray()`.
 
 You can still access *all* properties submitted with the request using `$request->properties()->get()`, which returns a Mf2/Json-style array, regardless of the syntax the client actually used to submit the request:
 
 ```php
 $request->properties()->get();
-	
+
 /*
 	Array
 	(
@@ -209,7 +209,7 @@ if (!function_exists('verifyMicropubAccessToken')) {
 	function verifyMicropubAccessToken(string $bearer)
 	{
 		// Whatever your own token endpoint verification
-		return $token = My\Token\Endpoint::verify($bearer);	
+		return $token = My\Token\Endpoint::verify($bearer);
 	}
 }
 ```
@@ -223,17 +223,17 @@ $token = new \Kirby\Toolkit\Obj([
 	'scope' => $token->scope(), // 'create update'
 	'issued_at' => $token->time() // 1525376494
 ]);
-	
+
 $error = new \Kirby\Toolkit\Obj([
 	'error' => 'forbidden',
-	'error_description' => 'Token is invalid.'		
+	'error_description' => 'Token is invalid.'
 ]);
 ```
 
 ### Error Handling
 If there are problems with parsing (parts of) data from the request, the object will include an error property accessible with `$request->error()`.
 
-It is *highly* recommended you immediately check your request for errors after instantiating the object— In particular to address auth errors. (In any case, the request class will not parse the incoming data or attempt to download files if the auth token does not check out) 
+It is *highly* recommended you immediately check your request for errors after instantiating the object— In particular to address auth errors. (In any case, the request class will not parse the incoming data or attempt to download files if the auth token does not check out)
 
 The included error handling class also allows you to send a response to the client, correctly formatted based on the HTTP accept header sent by the client:
 
@@ -271,16 +271,9 @@ $error = new \mof\Micropub\Error($error, $property, $description);
 
 ## Installation
 
-### Composer
-The simplest way to integrate this into your project is to list it as a composer dependency:
-
-```
-composer require mof/kirby3-micropub-request
-```
-
 ### Download
 
-Download and copy this repository to `/site/plugins/{{ your-plugin-name }}/vendor` and make sure to correctly load the classes, for example using [Kirby's built-in autoloader](https://getkirby.com/docs/reference/templates/helpers/load). 
+Download and copy this repository to `/site/plugins/{{ your-plugin-name }}/vendor` and make sure to correctly load the classes, for example using [Kirby's built-in autoloader](https://getkirby.com/docs/reference/templates/helpers/load).
 
 
 ## Setup/Options
@@ -293,7 +286,7 @@ The default token endpoint used is [https://tokens.indieauth.com/token](https://
 'mof.micropub.auth.token-endpoint' => 'https://your.token.endpoint',
 ```
 
-### Change ‘me’ URL path 
+### Change ‘me’ URL path
 As part of the authentication flow, the `IndieAuth` class will check the 'me' property of the received access token (the so called [User Profile URL](https://www.w3.org/TR/indieauth/#x3-1-user-profile-url)) against `kirby()->urls()->base()`. If you don't use `mydomain.tld` for IndieAuth, but for example `mydomain.tld/about/me`, you can set a path:
 
 ```php
