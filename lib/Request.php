@@ -1,4 +1,5 @@
 <?php
+
 namespace mof\Micropub;
 
 use Exception;
@@ -99,11 +100,11 @@ class Request extends Obj
     protected $attachments;
 
     /**
-     * The Files object is a is a Kirby\Http\Request\Files
+     * The Files object is a is a \Kirby\Toolkit\Obj
      * constructed with the $_FILES global and/or the
      * attachments submitted as URL
      *
-     * @var Kirby\Http\Request\Files
+     * @var \Kirby\Toolkit\Obj
      */
     protected $files;
 
@@ -186,7 +187,7 @@ class Request extends Obj
         	$this->uploadroot = kirby()->root('media') . DS . 'temp';
         }
 
-    	// Set a few properties to match the behavior of Kirby\Http\Request
+    	// Set a few properties to match the behavior of \Kirby\Http\Request
         $this->method = kirby()->request()->method();
         $this->query = kirby()->request()->query();
 
@@ -212,13 +213,14 @@ class Request extends Obj
             'files'      => $this->files(),
             'html'       => $this->html(),
             'method'     => $this->method(),
-            'properties' => $this->properties()->get(),
+            'properties' => $this->properties(),
             'q'			 => $this->q(),
             'query'      => $this->query(),
             'status'     => $this->status(),
             'type'       => $this->type(),
             'update'     => $this->update(),
-            'url'        => $this->url()
+            'url'        => $this->url(),
+            'error'      => $this->error ?? null
         ];
     }
 

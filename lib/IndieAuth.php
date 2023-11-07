@@ -1,4 +1,5 @@
 <?php
+
 namespace mof\Micropub\Request;
 
 use mof\Micropub\Error;
@@ -69,7 +70,8 @@ class IndieAuth extends \Kirby\Http\Request\Auth\BearerAuth
             'issued_by' => $this->issued_by(),
             'client_id' => $this->client_id(),
             'issued_at'	=> $this->issued_at(),
-            'scope'   	=> $this->scope()
+            'scope'   	=> $this->scope(),
+            'error'     => $this->error ?? null
         ];
     }
 
@@ -123,22 +125,22 @@ class IndieAuth extends \Kirby\Http\Request\Auth\BearerAuth
 
 		// Get access token from a remote token endpoint
 		else {
-			$accesstoken = json_decode(
-				Remote::get(
-					option('mof.micropub.auth.token-endpoint',
-						   'https://tokens.indieauth.com/token'), [
-                'headers' => [
-                    'Accept: application/json',
-                    'Authorization: Bearer ' . $bearer
+			$accesstoken = json_decode(Remote::get(
+                option('mof.micropub.auth.token-endpoint', 'https://tokens.indieauth.com/token'),
+                [
+                    'headers' => [
+                        'Accept: application/json',
+                        'Authorization: Bearer ' . $bearer
+                    ]
                 ]
-            ]));
+            )->content());
 		}
 
-		if ($accesstoken->get('error', false)) {
+		if (isset($accesstoken->error)) {
             $this->error = new Error(
             	'invalid_request',
-            	$accesstoken->get('error'),
-            	$accesstoken->get('error_description')
+            	$accesstoken->error,
+            	$accesstoken->error_description
             );
         }
 

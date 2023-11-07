@@ -15,13 +15,13 @@ This is *not* a fully working Kirby 3 plugin. The goal of this code is to have a
 - Error handling
 
 ## Usage
-Load the classes in `src/` using your favourite method, for example using [Kirby's built-in autoloader](https://getkirby.com/docs/reference/templates/helpers/load):
+Load the classes in `lib/` using your favourite method, for example using [Kirby's built-in autoloader](https://getkirby.com/docs/reference/templates/helpers/load):
 
 ```php
 load([
-  'mof\\Micropub\\Request' => 'src/Request.php',
-	'mof\\Micropub\\IndieAuth' => 'src/IndieAuth.php',
-	'mof\\Micropub\\Error' => 'src/Error.php'
+  'mof\\Micropub\\Request' => 'lib/Request.php',
+	'mof\\Micropub\\IndieAuth' => 'lib/IndieAuth.php',
+	'mof\\Micropub\\Error' => 'lib/Error.php'
 ], __DIR__);
 ```
 
@@ -47,7 +47,7 @@ if($request->is('POST')) {
       // All the properties of the post, already standardized into a predictable data array
       $content = $request->body()->toArray();
 
-      // Access the attachments, already downloaded and ready as Kirby\Http\Request\Files Object
+      // Access the attachments, already downloaded and ready as Kirby\Toolkit\Obj Object
       $files = $request->files();
 
       // Support for Micropub extensions like 'post-status'
@@ -126,13 +126,13 @@ $request->properties()->get();
 
 
 ### Files
-[Files uploaded via multipart/form-data](https://www.w3.org/TR/micropub/#h-uploading-files), and/or files provided as URL value, are unified into a single [`Kirby\Http\Request\Files`](https://github.com/getkirby/kirby/blob/master/src/Http/Request/Files.php) object— Photo, video or audio attachments provided as URL will be fetched automatically.
+[Files uploaded via multipart/form-data](https://www.w3.org/TR/micropub/#h-uploading-files), and/or files provided as URL value, are unified into a single [`Kirby\Toolkit\Obj`](https://github.com/getkirby/kirby/blob/main/src/Toolkit/Obj.php) object— Photo, video or audio attachments provided as URL will be fetched automatically.
 
 ```php
 $request->files();
 
 /*
-	Kirby\Http\Request\Files Object
+	Kirby\Toolkit\Obj
 	(
 		[photo] => Array
 			(
@@ -312,7 +312,7 @@ Returns the requesting client's ID (an URL) as string. Shortcut for `$request->a
 Returns an array of the Micropub `mp-` [server commands](https://indieweb.org/Micropub-extensions#Server_Commands) included in the request.
 
 ### `$request->files()`
-Returns a [`Kirby\Http\Request\Files`](https://github.com/getkirby/kirby/blob/master/src/Http/Request/Files.php) object constructed with all files which have been sent with the request (per form upload and/or as url reference, see documentation above).
+Returns a [`Kirby\Toolkit\Obj`](https://github.com/getkirby/kirby/blob/master/src/Toolkit/Obj.php) object constructed with all files which have been sent with the request (per form upload and/or as url reference, see documentation above).
 
 ### `$request->get(string $property, $fallback)`
 Property getter. Example: `$request->get('files', false)`

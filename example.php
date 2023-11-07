@@ -11,13 +11,13 @@ require dirname(__DIR__, 1) . '/kirby/bootstrap.php';
 $kirby = new Kirby();
 
 load([
-    'mof\\Micropub\\Request' => 'src/Request.php',
-    'mof\\Micropub\\IndieAuth' => 'src/IndieAuth.php',
-    'mof\\Micropub\\Error' => 'src/Error.php'
+    'mof\\Micropub\\Request' => 'lib/Request.php',
+    'mof\\Micropub\\IndieAuth' => 'lib/IndieAuth.php',
+    'mof\\Micropub\\Error' => 'lib/Error.php'
 ], __DIR__);
 
 /*
-// Uncomment this to return a fake access token
+// Uncomment this to fake verify any access token
 function verifyMicropubAccessToken(string $bearer)
 {
     echo 'Creating fake access token for bearer: ' . $bearer;
